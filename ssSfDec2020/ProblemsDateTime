@@ -1,0 +1,23 @@
+1.	 Which class would you use to store your birthday in years, months, days, seconds, and nanoseconds?
+
+LocalDateTime
+
+
+2.	 Given a random date, how would you find the date of the previous Thursday?
+
+Use DayOfWeek to extract the day of the random date,
+then create 2 cases. If the random day is before Thursday,
+ add the int value (1-7) of Thursday to the int value of the random day.
+  Otherwise, subtract the int value of Thursday from the int value
+   of the random day. Then, subtract the result from the date of the random day.
+
+3.	 What is the difference between a ZoneId and a ZoneOffset?
+
+ZoneId provides a time zone id and enables you to convert between
+ a LocalDateTime and an Instant; ZoneOffset just provides
+  the time offset between a time zone and Greenwich, England.
+
+4.	 How would you convert an Instant to a ZonedDateTime? How would you convert a ZonedDateTime to an Instant?
+
+You can add or subtract the ZoneOffset to convert
+ from an Instant to a ZonedDateTime or vice versa.
