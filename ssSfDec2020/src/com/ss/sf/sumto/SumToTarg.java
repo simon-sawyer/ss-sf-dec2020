@@ -1,13 +1,11 @@
 package com.ss.sf.sumto;
 
-import java.util.Arrays;
-
 public class SumToTarg {
 	
 	public static void main(String[] args){
 		SumToTarg test1 = new SumToTarg();
-		int[] testList = new int[] {1, 2, 3, 4};
-		System.out.println(test1.sumToTarg(testList, 11));
+		int[] testList = new int[] {1, 2, 3, 4, 5};
+		System.out.println(test1.sumToTarg(testList, 100));
 		
 	}
 
@@ -26,27 +24,24 @@ public class SumToTarg {
 				sumK[i][j] += toSum[i];
 			}
 		}
-		
+		// Update table to cover all possible combinations of addition
 		for(int k = 1; k < toSum.length; k++){
 			for(int i = 0; i < toSum.length-k; i++){
 				for(int j = i + 1; j < toSum.length; j++){
 					try{
 						sumK[i][j] += toSum[j + k - 1];
 					}catch(ArrayIndexOutOfBoundsException e){
+						//This statement is where I'm having problems
 						sumK[i][j] += toSum[i + 2 + k - j];
 					}
 					if(sumK[i][j] == targ){
-						System.out.println(Arrays.deepToString(sumK));
 						return true;
 					}
-					System.out.println(Arrays.deepToString(sumK));
-					System.out.println("i: "+ i + " j: " + j + " k: " + k);
 				}
 
 			}
 
-		}
-		
+		}		
 		return false;
 	}
 	
