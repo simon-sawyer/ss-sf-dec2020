@@ -17,11 +17,10 @@ public class LmsClient {
 
 		Scanner console = new Scanner(System.in);
 		Integer input = console.nextInt();
-		console.close();
 		if(input == 1){
 			LibrarianClient librarian = new LibrarianClient();
 			try{
-				librarian.lib1();
+				librarian.lib1(console);
 			}catch(Exception e){
 				System.out.println("An error occurred");
 				e.printStackTrace();
@@ -30,7 +29,7 @@ public class LmsClient {
 			if(input == 2){
 				AdministratorClient admin = new AdministratorClient();
 				try{
-					admin.admin1();
+					admin.admin1(console);
 				}catch(Exception e){
 					System.out.println("An error occurred");
 					e.printStackTrace();
@@ -39,7 +38,7 @@ public class LmsClient {
 				if(input == 3){
 					BorrowerClient borrower = new BorrowerClient();
 					try{
-						borrower.borr1();
+						borrower.borr1(console);
 					}catch(Exception e){
 						System.out.println("An error occurred");
 						e.printStackTrace();
@@ -52,7 +51,8 @@ public class LmsClient {
 					mainMenu();
 				}
 			}			
-		}		
+		}
+		console.close();
 	}
 
 }

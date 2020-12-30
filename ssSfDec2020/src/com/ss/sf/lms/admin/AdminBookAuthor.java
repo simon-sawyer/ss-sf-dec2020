@@ -10,7 +10,7 @@ import com.ss.sf.lms.domain.Book;
 
 public class AdminBookAuthor {
 	
-	public void displayOptions(){
+	public void displayOptions(Scanner console){
 		System.out.println("Which operation would you like to perform:"
 				+ "1) Add Book"
 				+ "2) Add Author"
@@ -21,26 +21,24 @@ public class AdminBookAuthor {
 				+ "7) Read Books"
 				+ "8) Read Authors"
 				+ "9) Return to previous menu");
-		Scanner console = new Scanner(System.in);
 		int input = console.nextInt();
-		console.close();
 		if(input == 1){
-			this.addBook();
+			this.addBook(console);
 		
 		}if(input == 2){
-			this.addAuthor();					
+			this.addAuthor(console);					
 		
 		}if(input == 3){
-			this.updateBook();
+			this.updateBook(console);
 		
 		}if(input == 4){
-			this.updateAuthor();
+			this.updateAuthor(console);
 		
 		}if(input == 5){
-			this.deleteBook();
+			this.deleteBook(console);
 		
 		}if(input == 6){
-			this.deleteAuthor();
+			this.deleteAuthor(console);
 		
 		}if(input == 7){
 			this.readBook();
@@ -50,13 +48,12 @@ public class AdminBookAuthor {
 		
 		}if(input == 9){
 			AdministratorClient admin = new AdministratorClient();
-			admin.admin1();
+			admin.admin1(console);
 		}
 	}
-	public void addBook(){
+	public void addBook(Scanner console){
 		Book newBook = new Book();
 		BookDAO bookDao = new BookDAO();
-		Scanner console = new Scanner(System.in);
 		System.out.println("Please enter book id");
 		newBook.setBookId(console.nextInt());
 		System.out.println("Please enter author id");
@@ -65,7 +62,6 @@ public class AdminBookAuthor {
 		newBook.setPubId(console.nextInt());
 		System.out.println("Please enter title");
 		newBook.setTitle(console.nextLine());
-		console.close();
 		try{
 			bookDao.addBook(newBook);
 		}catch(Exception e){
@@ -74,15 +70,13 @@ public class AdminBookAuthor {
 		}
 	}
 	
-	public void addAuthor(){
+	public void addAuthor(Scanner console){
 		Author newAuthor = new Author();
 		AuthorDAO authorDao = new AuthorDAO();
-		Scanner console = new Scanner(System.in);
 		System.out.println("Please enter author id");
 		newAuthor.setAuthorId(console.nextInt());
 		System.out.println("Please enter author name");
 		newAuthor.setAuthorName(console.nextLine());
-		console.close();
 		try{
 			authorDao.addAuthor(newAuthor);
 		}catch(Exception e){
@@ -91,10 +85,9 @@ public class AdminBookAuthor {
 		}
 	}
 	
-	public void updateBook(){
+	public void updateBook(Scanner console){
 		BookDAO bookDao = new BookDAO();
 		System.out.println("Please enter the id of the book that you would like to update");
-		Scanner console = new Scanner(System.in);
 		int input = console.nextInt();
 		try{
 			Book book = bookDao.getBook(input);
@@ -108,20 +101,17 @@ public class AdminBookAuthor {
 			book.setPubId(console.nextInt());
 			System.out.println("Please enter new title");
 			book.setTitle(console.nextLine());
-			console.close();
 			
 			bookDao.updateBook(book);
 		}catch(Exception e){
-			console.close();
 			System.out.println("An error occurred");
 			e.printStackTrace();
 		}
 	}
 	
-	public void updateAuthor(){
+	public void updateAuthor(Scanner console){
 		AuthorDAO authorDao = new AuthorDAO();
 		System.out.println("Please enter the id of the author that you would like to update");
-		Scanner console = new Scanner(System.in);
 		int input = console.nextInt();
 		try{
 			Author author = authorDao.getAuthor(input);
@@ -131,57 +121,49 @@ public class AdminBookAuthor {
 			author.setAuthorId(console.nextInt());
 			System.out.println("Please enter new author name");
 			author.setAuthorName(console.nextLine());
-			console.close();
 			
 			authorDao.updateAuthor(author);			
 		}catch(Exception e){
-			console.close();
 			System.out.println("An error occurred");
 			e.printStackTrace();
 		}
 	}
 	
-	public void deleteBook(){
+	public void deleteBook(Scanner console){
 		BookDAO bookDao = new BookDAO();
 		System.out.println("Please enter the id of the book that you would like to delete");
-		Scanner console = new Scanner(System.in);
 		int input = console.nextInt();
 		try{
 			Book book = bookDao.getBook(input);
 			System.out.println(book.toString());
 			System.out.println("Are you sure you want to delete this book? /n 1) Yes /n 2) No");
 			input = console.nextInt();
-			console.close();
 			if(input == 1){
 				bookDao.deleteBook(book);
 			}else{
 				this.displayOptions();
 			}
 		}catch(Exception e){
-			console.close();
 			System.out.println("An error occurred");
 			e.printStackTrace();
 		}
 	}
 	
-	public void deleteAuthor(){
+	public void deleteAuthor(Scanner console){
 		AuthorDAO authorDao = new AuthorDAO();
 		System.out.println("Please enter the id of the author that you would like to delete");
-		Scanner console = new Scanner(System.in);
 		int input = console.nextInt();
 		try{
 			Author author = authorDao.getAuthor(input);
 			System.out.println(author.toString());
 			System.out.println("Are you sure you want to delete this author? /n 1) Yes /n 2) No");
 			input = console.nextInt();
-			console.close();
 			if(input == 1){
 				authorDao.deleteAuthor(author);
 			}else{
 				this.displayOptions();
 			}
 		}catch(Exception e){
-			console.close();
 			System.out.println("An error occurred");
 			e.printStackTrace();
 		}

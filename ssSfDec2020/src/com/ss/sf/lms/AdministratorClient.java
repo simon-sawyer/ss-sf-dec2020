@@ -6,11 +6,7 @@ import com.ss.sf.lms.admin.*;
 
 public class AdministratorClient {
 	
-	public void main(String[] args){
-		admin1();
-	}
-	
-	public void admin1(){
+	public void admin1(Scanner console){
 		System.out.println("Which of the following actions would you like to perform");
 		System.out.println("1) Add/Update/Delete/Read Book and Author /n"
 				+ "2) Add/Update/Delete/Read Publishers /n"
@@ -18,28 +14,26 @@ public class AdministratorClient {
 				+ "4) Add/Update/Delete/Read Borrowers /n"
 				+ "5) Over-ride Due Date for a Book Loan /n"
 				+ "6) Return to main menu");
-		Scanner console = new Scanner(System.in);
 		int input = console.nextInt();
-		console.close();
 		if(input == 1){
 			AdminBookAuthor admin = new AdminBookAuthor();
-			admin.displayOptions();
+			admin.displayOptions(console);
 		}
 		if(input == 2){
 			AdminPublishers admin = new AdminPublishers();
-			admin.displayOptions();
+			admin.displayOptions(console);
 		}
 		if(input == 3){
 			AdminLibraryBranch admin = new AdminLibraryBranch();
-			admin.displayOptions();
+			admin.displayOptions(console);
 		}
 		if(input == 4){
 			AdminBorrower admin = new AdminBorrower();
-			admin.displayOptions();
+			admin.displayOptions(console);
 		}
 		if(input == 5){
 			AdminBookLoans admin = new AdminBookLoans();
-			admin.displayOptions();
+			admin.displayOptions(console);
 		}
 		if(input == 6){
 			LmsClient.mainMenu();;

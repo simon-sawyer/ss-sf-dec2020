@@ -16,30 +16,29 @@ public class AdminPublishers {
 				+ "3) Delete Publisher"
 				+ "4) Read Publisher"
 				+ "5) Return to previous menu");
-		Scanner console = new Scanner(System.in);
 		int input = console.nextInt();
-		console.close();
+
 		if(input == 1){
-			this.addPublisher();
+			this.addPublisher(console);
 		
 		}if(input == 2){
-			this.updatePublisher();					
+			this.updatePublisher(console);					
 		
 		}if(input == 3){
-			this.deletePublisher();
+			this.deletePublisher(console);
 		
 		}if(input == 4){
 			this.readPublisher();
 		
 		}if(input == 5){
 			AdministratorClient admin = new AdministratorClient();
-			admin.admin1();
+			admin.admin1(console);
 		}
 	}
-	public void addPublisher(){
+	public void addPublisher(Scanner console){
 		Publisher newPublisher = new Publisher();
 		PublisherDAO PublisherDao = new PublisherDAO();
-		Scanner console = new Scanner(System.in);
+
 		System.out.println("Please enter publisher id");
 		newPublisher.setPubId(console.nextInt());
 		System.out.println("Please enter publisher name");
@@ -48,7 +47,7 @@ public class AdminPublishers {
 		newPublisher.setPubAddress(console.nextLine());
 		System.out.println("Please enter publisher phone");
 		newPublisher.setPubPhone(console.nextLine());
-		console.close();
+
 		try{
 			PublisherDao.addPublisher(newPublisher);
 		}catch(Exception e){
@@ -57,10 +56,10 @@ public class AdminPublishers {
 		}
 	}
 	
-	public void updatePublisher(){
+	public void updatePublisher(Scanner console){
 		PublisherDAO publisherDao = new PublisherDAO();
 		System.out.println("Please enter the id of the Publisher that you would like to update");
-		Scanner console = new Scanner(System.in);
+
 		int input = console.nextInt();
 		try{
 			Publisher publisher = publisherDao.getPublisher(input);
@@ -74,34 +73,32 @@ public class AdminPublishers {
 			publisher.setPubAddress(console.nextLine());
 			System.out.println("Please enter publisher phone");
 			publisher.setPubPhone(console.nextLine());
-			console.close();
+
 			
 			publisherDao.updatePublisher(publisher);
 		}catch(Exception e){
-			console.close();
+
 			System.out.println("An error occurred");
 			e.printStackTrace();
 		}
 	}
 	
-	public void deletePublisher(){
+	public void deletePublisher(Scanner console){
 		PublisherDAO publisherDao = new PublisherDAO();
 		System.out.println("Please enter the id of the publisher that you would like to delete");
-		Scanner console = new Scanner(System.in);
 		int input = console.nextInt();
 		try{
 			Publisher publisher = publisherDao.getPublisher(input);
 			System.out.println(publisher.toString());
 			System.out.println("Are you sure you want to delete this publisher? /n 1) Yes /n 2) No");
 			input = console.nextInt();
-			console.close();
+
 			if(input == 1){
 				publisherDao.deletePublisher(publisher);
 			}else{
 				this.displayOptions();
 			}
 		}catch(Exception e){
-			console.close();
 			System.out.println("An error occurred");
 			e.printStackTrace();
 		}

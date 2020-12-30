@@ -7,27 +7,23 @@ import com.ss.sf.lms.dao.BookLoansDAO;
 import com.ss.sf.lms.domain.BookLoans;
 
 public class AdminBookLoans {
-	public void displayOptions(){
+	public void displayOptions(Scanner console){
 		System.out.println("Please enter the id of the book that you wish to override. Enter 0 to return to previous menu");
-		Scanner console = new Scanner(System.in);
 		int input = console.nextInt();
-		console.close();
 		if(input == 0){
 			AdministratorClient admin = new AdministratorClient();
-			admin.admin1();
+			admin.admin1(console);
 		}else{
-			changeDueDate(input);
+			changeDueDate(input, console);
 		}
 	}
-	public void changeDueDate(int bookId){
+	public void changeDueDate(int bookId, Scanner console){
 		BookLoansDAO bookLoansDao = new BookLoansDAO();
 		try{
 			BookLoans bookLoan = bookLoansDao.getBookLoan(bookId);
 			System.out.println(bookLoan.toString());
 			System.out.println("How many days do you want to add to the due date?");
-			Scanner console = new Scanner(System.in);
 			int input = console.nextInt();
-			console.close();
 			bookLoan.setDueDate(bookLoan.getDueDate().plusDays(input));
 		}catch(Exception e){
 			System.out.println("An error occurred");

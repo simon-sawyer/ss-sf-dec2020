@@ -9,37 +9,35 @@ import com.ss.sf.lms.domain.Borrower;
 
 public class AdminBorrower {
 	
-	public void displayOptions(){
+	public void displayOptions(Scanner console){
 		System.out.println("Which operation would you like to perform:"
 				+ "1) Add Borrower"
 				+ "2) Update Borrower"
 				+ "3) Delete Borrower"
 				+ "4) Read Borrower"
 				+ "5) Return to previous menu");
-		Scanner console = new Scanner(System.in);
 		int input = console.nextInt();
-		console.close();
 		if(input == 1){
-			this.addBorrower();
+			this.addBorrower(console);
 		
 		}if(input == 2){
-			this.updateBorrower();					
+			this.updateBorrower(console);					
 		
 		}if(input == 3){
-			this.deleteBorrower();
+			this.deleteBorrower(console);
 		
 		}if(input == 4){
 			this.readBorrower();
 		
 		}if(input == 5){
 			AdministratorClient admin = new AdministratorClient();
-			admin.admin1();
+			admin.admin1(console);
 		}
 	}
-	public void addBorrower(){
+	public void addBorrower(Scanner console){
 		Borrower newBorrower = new Borrower();
 		BorrowerDAO BorrowerDao = new BorrowerDAO();
-		Scanner console = new Scanner(System.in);
+		
 		System.out.println("Please enter card number");
 		newBorrower.setCardNo(console.nextInt());
 		System.out.println("Please enter borrower name");
@@ -48,7 +46,6 @@ public class AdminBorrower {
 		newBorrower.setAddress(console.nextLine());
 		System.out.println("Please enter borrower phone");
 		newBorrower.setPhone(console.nextLine());
-		console.close();
 		try{
 			BorrowerDao.addBorrower(newBorrower);
 		}catch(Exception e){
@@ -57,10 +54,9 @@ public class AdminBorrower {
 		}
 	}
 	
-	public void updateBorrower(){
+	public void updateBorrower(Scanner console){
 		BorrowerDAO borrowerDao = new BorrowerDAO();
 		System.out.println("Please enter the id of the Borrower that you would like to update");
-		Scanner console = new Scanner(System.in);
 		int input = console.nextInt();
 		try{
 			Borrower borrower = borrowerDao.getBorrower(input);
@@ -74,34 +70,29 @@ public class AdminBorrower {
 			borrower.setAddress(console.nextLine());
 			System.out.println("Please enter title");
 			borrower.setPhone(console.nextLine());
-			console.close();
 			
 			borrowerDao.updateBorrower(borrower);
 		}catch(Exception e){
-			console.close();
 			System.out.println("An error occurred");
 			e.printStackTrace();
 		}
 	}
 	
-	public void deleteBorrower(){
+	public void deleteBorrower(Scanner console){
 		BorrowerDAO borrowerDao = new BorrowerDAO();
 		System.out.println("Please enter the id of the Borrower that you would like to delete");
-		Scanner console = new Scanner(System.in);
 		int input = console.nextInt();
 		try{
 			Borrower borrower = borrowerDao.getBorrower(input);
 			System.out.println(borrower.toString());
 			System.out.println("Are you sure you want to delete this borrower? /n 1) Yes /n 2) No");
 			input = console.nextInt();
-			console.close();
 			if(input == 1){
 				borrowerDao.deleteBorrower(borrower);
 			}else{
 				this.displayOptions();
 			}
 		}catch(Exception e){
-			console.close();
 			System.out.println("An error occurred");
 			e.printStackTrace();
 		}

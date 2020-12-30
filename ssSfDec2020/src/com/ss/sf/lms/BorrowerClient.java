@@ -17,9 +17,8 @@ public class BorrowerClient {
 	
 	private int cardNo;
 	
-	public void borr1(){
+	public void borr1(Scanner console){
 		System.out.println("Enter your card number");
-		Scanner console = new Scanner(System.in);
 		int input = console.nextInt();
 		BorrowerDAO borrowerDao = new BorrowerDAO();
 		try{
@@ -27,7 +26,6 @@ public class BorrowerClient {
 				System.out.println("Please enter a valid card number. Enter 0 to return to main menu");
 				input = console.nextInt();
 				if(input == 0){
-					console.close();
 					LmsClient.mainMenu();
 				}				
 			}
@@ -35,12 +33,11 @@ public class BorrowerClient {
 					+ " 2) Return a Book /n"
 					+ "3) Quit to Previous");
 			input = console.nextInt();
-			console.close();
 			if(input == 1){
-				this.checkOut();
+				this.checkOut(console);
 			}else{
 				if(input == 2){
-					this.checkIn();
+					this.checkIn(console);
 				}else{
 					LmsClient.mainMenu();
 				}
@@ -52,7 +49,7 @@ public class BorrowerClient {
 			
 	}
 	
-	public void checkOut(){
+	public void checkOut(Scanner console){
 		System.out.println("Please select the branch that you want to borrow from");
 		BranchDAO branchDao = new BranchDAO();
 		try{
@@ -65,18 +62,17 @@ public class BorrowerClient {
 			System.out.println(count + ") Quit to previous menu");
 			Scanner console = new Scanner(System.in);
 			int input = console.nextInt();
-			console.close();
 			try{
-				this.selectBook(branches.get(input), true);
+				this.selectBook(branches.get(input), true, console);
 			}catch(IndexOutOfBoundsException e){
-				this.borr1();
+				this.borr1(console);
 			}
 		}catch(Exception e){
 			System.out.println("An error occurred");
 			e.printStackTrace();
 		}
 	}
-	public void selectBook(LibraryBranch branch, boolean out){
+	public void selectBook(LibraryBranch branch, boolean out, Scanner console){
 		BookCopiesDAO bookCopiesDao = new BookCopiesDAO();
 		BookDAO bookDao = new BookDAO();
 		BookLoansDAO bookLoansDao = new BookLoansDAO();
@@ -85,13 +81,17 @@ public class BorrowerClient {
 			List<BookCopies> bookCopies = bookCopiesDao.readBookCopies();
 			int count = 1;
 			for(BookCopies bookCopy : bookCopies){
-				if(bookCopy.getNoOfCopies() > 0){
+				if(bookCopy.getNoOfCopies() > 0 && out){
 					System.out.println(count + ") " + bookDao.getBook(bookCopy.getBookId()));
 					count++;
+				}else {
+					if(!out) {
+						System.out.println(count + ")" + bookDao.getBook(bookCopy.getBookId()));
+						count++;
+					}
 				}
 			}
 			System.out.println(count + ") Cancel operation");
-			Scanner console = new Scanner(System.in);
 			int input = console.nextInt();
 			try{
 				BookCopies bookCopy = bookCopies.get(input);
@@ -102,8 +102,7 @@ public class BorrowerClient {
 					bookLoansDao.deleteBook(bookLoansDao.getBookLoan(bookCopy.getBookId()));
 				}				
 			}catch(IndexOutOfBoundsException e){
-				console.close();
-				this.borr1();
+				this.borr1(console);
 			}
 		}catch(Exception e){
 			System.out.println("An error occurred");
@@ -124,11 +123,10 @@ public class BorrowerClient {
 			System.out.println(count + ") Quit to previous menu");
 			Scanner console = new Scanner(System.in);
 			int input = console.nextInt();
-			console.close();
 			try{
-				this.selectBook(branches.get(input), false);
+				this.selectBook(branches.get(input), false, console);
 			}catch(IndexOutOfBoundsException e){
-				this.borr1();
+				this.borr1(console);
 			}
 		}catch(Exception e){
 			System.out.println("An error occurred");
