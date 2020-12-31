@@ -14,17 +14,32 @@ public class AdminBookLoans {
 			AdministratorClient admin = new AdministratorClient();
 			admin.admin1(console);
 		}else{
-			changeDueDate(input, console);
+			System.out.println("Please enter the cardNo of the patron who checked out the book");
+			int cardNo = console.nextInt();
+			if(cardNo == 0){
+				AdministratorClient admin = new AdministratorClient();
+				admin.admin1(console);
+			}else {
+				System.out.println("Please enter the branchId of the library where the book belongs");
+				int branchId = console.nextInt();
+				if(branchId == 0){
+					AdministratorClient admin = new AdministratorClient();
+					admin.admin1(console);
+				}else {
+					changeDueDate(input, cardNo, branchId, console);
+				}
+			}
 		}
 	}
-	public void changeDueDate(int bookId, Scanner console){
+	public void changeDueDate(int bookId, int cardNo, int branchId, Scanner console){
 		BookLoansDAO bookLoansDao = new BookLoansDAO();
 		try{
-			BookLoans bookLoan = bookLoansDao.getBookLoan(bookId);
+			BookLoans bookLoan = bookLoansDao.getBookLoan(bookId, cardNo, branchId);
 			System.out.println(bookLoan.toString());
 			System.out.println("How many days do you want to add to the due date?");
 			int input = console.nextInt();
 			bookLoan.setDueDate(bookLoan.getDueDate().plusDays(input));
+			bookLoansDao.updateBook(bookLoan);
 		}catch(Exception e){
 			System.out.println("An error occurred");
 			e.printStackTrace();

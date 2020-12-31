@@ -10,12 +10,12 @@ import com.ss.sf.lms.domain.Publisher;
 public class PublisherDAO extends BaseDAO {
 
 	public void addPublisher(Publisher publisher) throws ClassNotFoundException, SQLException{
-		save("Insert into tbl_publisher (publisherId) Values (?)", 
-				new Object[] {publisher.getPubId()});
+		save("Insert into tbl_publisher Values (?, ?, ?, ?)", 
+				new Object[] {publisher.getPubId(), publisher.getPubName(), publisher.getPubAddress(), publisher.getPubPhone()});
 	}
 	
 	public void updatePublisher(Publisher publisher) throws ClassNotFoundException, SQLException{
-		save("Update tbl_publisher publisherName = ?, publisherAddress = ?, publisherPhone = ? Where publisherId = ?", 
+		save("Update tbl_publisher Set publisherName = ?, publisherAddress = ?, publisherPhone = ? Where publisherId = ?", 
 				new Object[] {publisher.getPubName(), publisher.getPubAddress(), publisher.getPubPhone(), publisher.getPubId()});
 	}
 	

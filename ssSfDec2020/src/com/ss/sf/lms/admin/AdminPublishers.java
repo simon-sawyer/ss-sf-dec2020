@@ -10,12 +10,12 @@ import com.ss.sf.lms.domain.Publisher;
 public class AdminPublishers {
 	
 	public void displayOptions(Scanner console){
-		System.out.println("Which operation would you like to perform:"
-				+ "1) Add Publisher"
-				+ "2) Update Publisher"
-				+ "3) Delete Publisher"
-				+ "4) Read Publisher"
-				+ "5) Return to previous menu");
+		System.out.println("Which operation would you like to perform:\n"
+				+ "1) Add Publisher\n"
+				+ "2) Update Publisher\n"
+				+ "3) Delete Publisher\n"
+				+ "4) Read Publisher\n"
+				+ "5) Return to previous menu\n");
 		int input = console.nextInt();
 
 		if(input == 1){
@@ -42,11 +42,11 @@ public class AdminPublishers {
 		System.out.println("Please enter publisher id");
 		newPublisher.setPubId(console.nextInt());
 		System.out.println("Please enter publisher name");
-		newPublisher.setPubName(console.nextLine());
+		newPublisher.setPubName(console.next() + console.nextLine());
 		System.out.println("Please enter publisher address");
-		newPublisher.setPubAddress(console.nextLine());
+		newPublisher.setPubAddress(console.next() + console.nextLine());
 		System.out.println("Please enter publisher phone");
-		newPublisher.setPubPhone(console.nextLine());
+		newPublisher.setPubPhone(console.next() + console.nextLine());
 
 		try{
 			PublisherDao.addPublisher(newPublisher);
@@ -65,14 +65,14 @@ public class AdminPublishers {
 			Publisher publisher = publisherDao.getPublisher(input);
 			System.out.println(publisher.toString());
 			
-			System.out.println("Please enter publisher id");
+			System.out.println("Please enter new publisher id");
 			publisher.setPubId(console.nextInt());
-			System.out.println("Please enter publisher name");
-			publisher.setPubName(console.nextLine());
-			System.out.println("Please enter publisher address");
-			publisher.setPubAddress(console.nextLine());
-			System.out.println("Please enter publisher phone");
-			publisher.setPubPhone(console.nextLine());
+			System.out.println("Please enter new publisher name");
+			publisher.setPubName(console.next() + console.nextLine());
+			System.out.println("Please enter new publisher address");
+			publisher.setPubAddress(console.next() + console.nextLine());
+			System.out.println("Please enter new publisher phone");
+			publisher.setPubPhone(console.next() + console.nextLine());
 
 			
 			publisherDao.updatePublisher(publisher);
@@ -90,7 +90,7 @@ public class AdminPublishers {
 		try{
 			Publisher publisher = publisherDao.getPublisher(input);
 			System.out.println(publisher.toString());
-			System.out.println("Are you sure you want to delete this publisher? /n 1) Yes /n 2) No");
+			System.out.println("Are you sure you want to delete this publisher? \n 1) Yes \n 2) No");
 			input = console.nextInt();
 
 			if(input == 1){
@@ -108,6 +108,7 @@ public class AdminPublishers {
 		PublisherDAO publisherDao = new PublisherDAO();
 		try{
 			System.out.println(publisherDao.readPublisher().toString());
+
 		}catch(Exception e){
 			System.out.println("An error occurred");
 			e.printStackTrace();

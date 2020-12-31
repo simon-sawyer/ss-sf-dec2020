@@ -9,7 +9,7 @@ import com.ss.sf.lms.domain.Author;
 public class AuthorDAO extends BaseDAO {
 
 	public void addAuthor(Author author) throws ClassNotFoundException, SQLException {
-		save("Insert into tbl_author (authorName) Values (?)", new Object[] { author.getAuthorName() });
+		save("Insert into tbl_author Values (?, ?)", new Object[] { author.getAuthorId(), author.getAuthorName() });
 	}
 
 	public void updateAuthor(Author author) throws ClassNotFoundException, SQLException {

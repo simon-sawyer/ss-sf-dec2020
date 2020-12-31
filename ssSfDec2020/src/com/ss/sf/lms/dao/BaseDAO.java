@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public abstract class BaseDAO {
 
 	PreparedStatement pstmt = null;
-	public String driver = "com.mysql.jdbc.Driver" ;
+	public String driver = "com.mysql.cj.jdbc.Driver" ;
 	public String url = "jdbc:mysql://localhost:3306/library";
 	public String username = "user1";
 	public String password = "password1";
@@ -21,7 +21,7 @@ public abstract class BaseDAO {
 	public void save(String sql, Object[] vals) throws ClassNotFoundException, SQLException {
 		PreparedStatement pstmt = getConnection().prepareStatement(sql);
 		for(int i = 0; i < vals.length; i++){
-			pstmt.setObject(i, vals[i]);
+			pstmt.setObject(i+1, vals[i]);
 		}
 		pstmt.executeUpdate();
 	}

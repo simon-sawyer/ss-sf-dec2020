@@ -1,6 +1,7 @@
 package com.ss.sf.lms;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -26,11 +27,12 @@ public class BorrowerClient {
 				System.out.println("Please enter a valid card number. Enter 0 to return to main menu");
 				input = console.nextInt();
 				if(input == 0){
-					LmsClient.mainMenu();
+					LmsClient.mainMenu(console);
 				}				
 			}
-			System.out.println("1) Check out a book /n"
-					+ " 2) Return a Book /n"
+			cardNo = input;
+			System.out.println("1) Check out a book \n"
+					+ "2) Return a Book\n"
 					+ "3) Quit to Previous");
 			input = console.nextInt();
 			if(input == 1){
@@ -39,7 +41,7 @@ public class BorrowerClient {
 				if(input == 2){
 					this.checkIn(console);
 				}else{
-					LmsClient.mainMenu();
+					LmsClient.mainMenu(console);
 				}
 			}
 		}catch(Exception e){
@@ -62,7 +64,7 @@ public class BorrowerClient {
 			System.out.println(count + ") Quit to previous menu");
 			int input = console.nextInt();
 			try{
-				this.selectBook(branches.get(input), true, console);
+				this.selectBook(branches.get(input-1), true, console);
 			}catch(IndexOutOfBoundsException e){
 				this.borr1(console);
 			}
@@ -77,15 +79,18 @@ public class BorrowerClient {
 		BookLoansDAO bookLoansDao = new BookLoansDAO();
 		System.out.println("Please select the book that you want to " + (out? "check out": "return"));
 		try{
-			List<BookCopies> bookCopies = bookCopiesDao.readBookCopies();
+			List<BookCopies> bookCopiesTemp = bookCopiesDao.readBooksByBranchId(branch.getBranchId());
+			List<BookCopies> bookCopies = new ArrayList<BookCopies>();
 			int count = 1;
-			for(BookCopies bookCopy : bookCopies){
+			for(BookCopies bookCopy : bookCopiesTemp){
 				if(bookCopy.getNoOfCopies() > 0 && out){
 					System.out.println(count + ") " + bookDao.getBook(bookCopy.getBookId()));
+					bookCopies.add(bookCopy);
 					count++;
 				}else {
 					if(!out) {
-						System.out.println(count + ")" + bookDao.getBook(bookCopy.getBookId()));
+						System.out.println(count + ") " + bookDao.getBook(bookCopy.getBookId()));
+						bookCopies.add(bookCopy);
 						count++;
 					}
 				}
@@ -93,12 +98,17 @@ public class BorrowerClient {
 			System.out.println(count + ") Cancel operation");
 			int input = console.nextInt();
 			try{
-				BookCopies bookCopy = bookCopies.get(input);
+				BookCopies bookCopy = bookCopies.get(input-1);
 				if(out){
-					BookLoans bookLoan = new BookLoans(bookCopy.getBookId(), bookCopy.getBranchId(), cardNo, LocalDate.now(), LocalDate.now().plusDays(7));
-					bookLoansDao.updateBook(bookLoan);
+					BookLoans bookLoan = new BookLoans(bookCopy.getBookId(), branch.getBranchId(), cardNo, LocalDate.now(), LocalDate.now().plusDays(7));
+					bookLoansDao.addBook(bookLoan);
 				}else{
-					bookLoansDao.deleteBook(bookLoansDao.getBookLoan(bookCopy.getBookId()));
+					if(bookLoansDao.getBookLoan(bookCopy.getBookId(), cardNo, branch.getBranchId()).getCardNo() == cardNo) {
+						bookLoansDao.deleteBook(bookLoansDao.getBookLoan(bookCopy.getBookId(), cardNo, branch.getBranchId()));
+						System.out.println("Book successfully returned");
+					}else {
+						System.out.println("You did not check out this book.");
+					}
 				}				
 			}catch(IndexOutOfBoundsException e){
 				this.borr1(console);
@@ -122,7 +132,7 @@ public class BorrowerClient {
 			System.out.println(count + ") Quit to previous menu");
 			int input = console.nextInt();
 			try{
-				this.selectBook(branches.get(input), false, console);
+				this.selectBook(branches.get(input-1), false, console);
 			}catch(IndexOutOfBoundsException e){
 				this.borr1(console);
 			}

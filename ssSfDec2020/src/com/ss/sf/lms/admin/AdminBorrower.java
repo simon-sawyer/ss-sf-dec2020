@@ -10,12 +10,12 @@ import com.ss.sf.lms.domain.Borrower;
 public class AdminBorrower {
 	
 	public void displayOptions(Scanner console){
-		System.out.println("Which operation would you like to perform:"
-				+ "1) Add Borrower"
-				+ "2) Update Borrower"
-				+ "3) Delete Borrower"
-				+ "4) Read Borrower"
-				+ "5) Return to previous menu");
+		System.out.println("Which operation would you like to perform:\n"
+				+ "1) Add Borrower\n"
+				+ "2) Update Borrower\n"
+				+ "3) Delete Borrower\n"
+				+ "4) Read Borrower\n"
+				+ "5) Return to previous menu\n");
 		int input = console.nextInt();
 		if(input == 1){
 			this.addBorrower(console);
@@ -41,11 +41,11 @@ public class AdminBorrower {
 		System.out.println("Please enter card number");
 		newBorrower.setCardNo(console.nextInt());
 		System.out.println("Please enter borrower name");
-		newBorrower.setName(console.nextLine());
+		newBorrower.setName(console.next() + console.nextLine());
 		System.out.println("Please enter borrower address");
-		newBorrower.setAddress(console.nextLine());
+		newBorrower.setAddress(console.next() + console.nextLine());
 		System.out.println("Please enter borrower phone");
-		newBorrower.setPhone(console.nextLine());
+		newBorrower.setPhone(console.next() + console.nextLine());
 		try{
 			BorrowerDao.addBorrower(newBorrower);
 		}catch(Exception e){
@@ -62,14 +62,14 @@ public class AdminBorrower {
 			Borrower borrower = borrowerDao.getBorrower(input);
 			System.out.println(borrower.toString());
 			
-			System.out.println("Please enter card number");
+			System.out.println("Please enter new card number");
 			borrower.setCardNo(console.nextInt());
-			System.out.println("Please enter borrower name");
-			borrower.setName(console.nextLine());
-			System.out.println("Please enter borrower address");
-			borrower.setAddress(console.nextLine());
-			System.out.println("Please enter title");
-			borrower.setPhone(console.nextLine());
+			System.out.println("Please enter new borrower name");
+			borrower.setName(console.next() + console.nextLine());
+			System.out.println("Please enter new borrower address");
+			borrower.setAddress(console.next() + console.nextLine());
+			System.out.println("Please enter new title");
+			borrower.setPhone(console.next() + console.nextLine());
 			
 			borrowerDao.updateBorrower(borrower);
 		}catch(Exception e){
@@ -85,7 +85,7 @@ public class AdminBorrower {
 		try{
 			Borrower borrower = borrowerDao.getBorrower(input);
 			System.out.println(borrower.toString());
-			System.out.println("Are you sure you want to delete this borrower? /n 1) Yes /n 2) No");
+			System.out.println("Are you sure you want to delete this borrower? \n 1) Yes \n 2) No");
 			input = console.nextInt();
 			if(input == 1){
 				borrowerDao.deleteBorrower(borrower);
@@ -102,6 +102,7 @@ public class AdminBorrower {
 		BorrowerDAO borrowerDao = new BorrowerDAO();
 		try{
 			System.out.println(borrowerDao.readBorrower().toString());
+
 		}catch(Exception e){
 			System.out.println("An error occurred");
 			e.printStackTrace();
