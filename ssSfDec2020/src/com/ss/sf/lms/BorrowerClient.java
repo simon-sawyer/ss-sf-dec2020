@@ -60,7 +60,6 @@ public class BorrowerClient {
 				count++;
 			}
 			System.out.println(count + ") Quit to previous menu");
-			Scanner console = new Scanner(System.in);
 			int input = console.nextInt();
 			try{
 				this.selectBook(branches.get(input), true, console);
@@ -110,7 +109,7 @@ public class BorrowerClient {
 		}
 	}
 	
-	public void checkIn(){
+	public void checkIn(Scanner console){
 		System.out.println("Please select the branch that you want to return to");
 		BranchDAO branchDao = new BranchDAO();
 		try{
@@ -121,7 +120,6 @@ public class BorrowerClient {
 				count++;
 			}
 			System.out.println(count + ") Quit to previous menu");
-			Scanner console = new Scanner(System.in);
 			int input = console.nextInt();
 			try{
 				this.selectBook(branches.get(input), false, console);

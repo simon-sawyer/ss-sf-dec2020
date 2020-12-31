@@ -9,7 +9,7 @@ import com.ss.sf.lms.domain.Publisher;
 
 public class AdminPublishers {
 	
-	public void displayOptions(){
+	public void displayOptions(Scanner console){
 		System.out.println("Which operation would you like to perform:"
 				+ "1) Add Publisher"
 				+ "2) Update Publisher"
@@ -96,7 +96,7 @@ public class AdminPublishers {
 			if(input == 1){
 				publisherDao.deletePublisher(publisher);
 			}else{
-				this.displayOptions();
+				this.displayOptions(console);
 			}
 		}catch(Exception e){
 			System.out.println("An error occurred");

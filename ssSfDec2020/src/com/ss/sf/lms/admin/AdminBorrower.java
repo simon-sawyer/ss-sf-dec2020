@@ -90,7 +90,7 @@ public class AdminBorrower {
 			if(input == 1){
 				borrowerDao.deleteBorrower(borrower);
 			}else{
-				this.displayOptions();
+				this.displayOptions(console);
 			}
 		}catch(Exception e){
 			System.out.println("An error occurred");

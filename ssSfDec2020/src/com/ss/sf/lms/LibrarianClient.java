@@ -14,12 +14,10 @@ import com.ss.sf.lms.dao.BranchDAO;
 
 public class LibrarianClient {
 	
-	public void lib1() throws ClassNotFoundException, SQLException{
+	public void lib1(Scanner console) throws ClassNotFoundException, SQLException{
 		System.out.println("1) Enter branch you manage "
 				+ "/n 2) Quit to previous menu");
-		Scanner console = new Scanner(System.in);
 		int input = console.nextInt();
-		console.close();
 		if(input == 1){
 			this.lib2();
 		}else{
@@ -49,7 +47,7 @@ public class LibrarianClient {
 		try{
 			this.lib3(branches.get(input), branchDao);
 		}catch(IndexOutOfBoundsException e){
-			this.lib1();
+			this.lib1(console);
 		}				
 	}
 	

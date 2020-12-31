@@ -141,7 +141,7 @@ public class AdminBookAuthor {
 			if(input == 1){
 				bookDao.deleteBook(book);
 			}else{
-				this.displayOptions();
+				this.displayOptions(console);
 			}
 		}catch(Exception e){
 			System.out.println("An error occurred");
@@ -161,7 +161,7 @@ public class AdminBookAuthor {
 			if(input == 1){
 				authorDao.deleteAuthor(author);
 			}else{
-				this.displayOptions();
+				this.displayOptions(console);
 			}
 		}catch(Exception e){
 			System.out.println("An error occurred");

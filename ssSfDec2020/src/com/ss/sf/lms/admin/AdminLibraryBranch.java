@@ -87,7 +87,7 @@ public class AdminLibraryBranch {
 			if(input == 1){
 				branchDao.deleteBranch(branch);
 			}else{
-				this.displayOptions();
+				this.displayOptions(console);
 			}
 		}catch(Exception e){
 			System.out.println("An error occurred");
